@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Processing Js</title>
+        <canvas id="output-canvas"></canvas>
+        <style>
+            html, body {
+                margin: 0;
+                overflow: hidden;
+            }
+        </style>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/prolight14/PJSLoader@master/libraries/processing.js"></script>
+    </head>
+    <body>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/prolight14/PJSLoader@master/libraries/PJSLoader.js"></script>
+        <script type="text/javascript">
+            updateCanvas = function(code, width, height) {
+                sessionStorage.code = code; // Need to update
+              
+                var rg = (/getImage([ ]*)\(([ ]*)(\'|\")(.*)(\'|\")([ ]*)\)/g);
+                var array = [];
+
+                var v = true;
+                var i = 100;
+
+                while(v !== null && i--)
+                {
+                    v = rg.exec(code);
+                    if (v && v[0]) {
+                        array.push(v[0].split(".")[0].replace(/'/g, '\"'));
+                    }
+                }
+                var a = new Function("return function() {\n\'"+array.join("\';\n\'")+"\';\}")();
+                PJSLoader.loadSketch("output-canvas", a, function() {
+                    size(parent.width, parent.height);
+                    println = (input, a) => {
+                        if (!a) {
+                            if (typeof input === "string") input = '"'+input+'"';
+                            else if (Array.isArray(input)) input = '['+input+']';
+                            else if (typeof input === "object") input = JSON.stringify(input);
+                        }
+                        try {
+                            let output = eval("with (eval(processing)) { "+input+" }");
+                            parent.jsconsole.log(output);
+                        } catch(e) {
+                            parent.jsconsole.error(e);
+                        }
+                    };
+                    eval(sessionStorage.getItem("code"));
+                });
+            };
+        </script>
+    </body>
+</html>

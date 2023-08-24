@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Khan Academy Editor Test</title>
+        <link rel="stylesheet" href="/style.css">
+        <link rel="icon" typ="image/png" href="https://cdn.glitch.com/9efd2fe4-71f2-4dd3-ae9c-51d09cf149db%2F56105496-bc44bd80-5ef9-11e9-8f65-859cda5d8941.png?v=1595529702074">
+        <link href="https://fonts.googleapis.com/css?family=Ubuntu+Mono&display=swap" rel="stylesheet">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.6/ace.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/atom-one-dark.min.css" rel="stylesheet">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script>
+    </head>
+    <body>
+        <div id="editor-container">
+            <div id="editor"></div>
+            <div id="output-container">
+                <iframe id="output" src="output.html"></iframe>
+                <button id="restart" onclick="updateCanvas()">Restart</button>
+                <button onclick="jsconsole.toggle()">Console</button>
+                <button onclick="jsconsole.clear()">Clear Logs</button>
+            </div>
+        </div>
+        <div id="console">
+            <div id="logs"></div>
+            <div id="input">
+                <span class="arrow">&gt;</span><input autocomplete="off" onkeyup="jsconsole.new()">
+            </div>
+        </div>
+        <script src="index.js"></script>
+    </body>
+</html>
